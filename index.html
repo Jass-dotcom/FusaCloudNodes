@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FusaCloud Nodes</title>
+    <link rel="stylesheet" href="fusacloud.css">
+</head>
+<body>
+    <div id="top-bar" class="top-bar hidden">
+        <div class="top-bar-content">
+            <span id="top-bar-user">Usuario:</span>
+            <button class="boton-salir" onclick="cerrarSesion()">Cerrar sesión</button>
+        </div>
+    </div>
+
+    <div id="pantalla-carga" class="pantalla activa">
+        <div class="contenedor-carga">
+            <div class="contenedor-logo">
+                <svg class="logo-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                    <rect x="70" y="60" width="60" height="80" fill="none" stroke="#8b5cf6" stroke-width="2" rx="4"/>
+                    <path d="M 85 75 Q 100 85 115 75" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                    <path d="M 85 90 L 115 90" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                    <path d="M 85 105 L 115 105" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                    <path d="M 85 120 L 115 120" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                </svg>
+            </div>
+            <h1 class="titulo-carga">FusaCloud Nodes</h1>
+            <div class="barra-carga">
+                <div class="progreso-carga"></div>
+            </div>
+            <p class="texto-carga">Cargando</p>
+        </div>
+    </div>
+
+    <div id="pantalla-login" class="pantalla">
+        <div class="contenedor-pantalla login-pantalla">
+            <div class="login-card">
+                <img src="photo_2026.jpg" alt="Logo FusaCloud" class="logo-login" onerror="this.style.display='none'">
+                <h1>FusaCloud Nodes</h1>
+                <p class="subtitulo-login">Selecciona el tipo de usuario e ingresa con la cuenta proporcionada por el administrador.</p>
+                <div class="rol-selector">
+                    <button type="button" id="rol-admin" class="rol-btn active" onclick="setRole('admin')">Administrador</button>
+                    <button type="button" id="rol-student" class="rol-btn" onclick="setRole('student')">Estudiante</button>
+                </div>
+                <div class="input-group login-input">
+                    <input id="login-usuario" type="text" placeholder="Usuario" autocomplete="username">
+                </div>
+                <div class="input-group login-input">
+                    <input id="login-pin" type="password" placeholder="Contraseña / PIN" autocomplete="current-password">
+                </div>
+                <button class="boton-primario" onclick="loginUsuario()">Ingresar</button>
+                <p class="nota-login">Los estudiantes deben usar una cuenta institucional creada por el administrador.</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="pantalla-admin" class="pantalla">
+        <div class="contenedor-pantalla">
+            <button class="boton-volver" onclick="cerrarSesion()">Cerrar sesión</button>
+            <h1 class="titulo-pantalla">Panel Administrativo</h1>
+            <p class="subtitulo-pantalla">Crea cuentas de estudiante, institucionales y administradores extra.</p>
+            <div class="admin-area">
+                <div class="admin-card">
+                    <h2>Crear nueva cuenta</h2>
+                    <label for="new-account-role">Tipo de cuenta</label>
+                    <select id="new-account-role">
+                        <option value="student">Cuenta Estudiante</option>
+                        <option value="institutional">Cuenta Institucional</option>
+                        <option value="admin">Administrador adicional</option>
+                    </select>
+                    <label for="new-account-id">Usuario</label>
+                    <input id="new-account-id" type="text" placeholder="Ej: EST-001" autocomplete="off">
+                    <label for="new-account-pin">PIN de 4 dígitos</label>
+                    <input id="new-account-pin" type="password" placeholder="1234" maxlength="4" autocomplete="new-password">
+                    <button class="boton-primario" onclick="crearCuenta()">Crear cuenta</button>
+                </div>
+                <div class="admin-card admin-list-card">
+                    <h2>Usuarios registrados</h2>
+                    <ul id="admin-user-list" class="lista-usuarios"></ul>
+                </div>
+            </div>
+            <button class="boton-nav" onclick="mostrarPantalla('inicio')">Ir al inicio</button>
+        </div>
+    </div>
+
+    
+    <div id="pantalla-inicio" class="pantalla">
+        <div class="contenedor-inicio">
+            <div class="seccion-heroica">
+                <div class="contenedor-logo grande">
+                    <svg class="icono-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                        <rect x="70" y="60" width="60" height="80" fill="none" stroke="#8b5cf6" stroke-width="2" rx="4"/>
+                        <path d="M 85 75 Q 100 85 115 75" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                        <path d="M 85 90 L 115 90" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                        <path d="M 85 105 L 115 105" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                        <path d="M 85 120 L 115 120" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h1 class="titulo-principal">FusaCloud Nodes</h1>
+                <p class="subtitulo-principal">Accede a herramientas y recursos educativos digitales.</p>
+            </div>
+            
+            <div class="contenedor-botones">
+                <button class="boton-nav" onclick="mostrarPantalla('biblioteca')">
+                    <span class="icono-boton">📚</span>
+                    <span class="texto-boton">Biblioteca</span>
+                </button>
+                <button class="boton-nav" onclick="mostrarPantalla('programacion')">
+                    <span class="icono-boton">💻</span>
+                    <span class="texto-boton">Programación</span>
+                </button>
+                <button class="boton-nav" onclick="mostrarPantalla('recursos')">
+                    <span class="icono-boton">🎓</span>
+                    <span class="texto-boton">Recursos</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla Biblioteca Digital -->
+    <div id="pantalla-biblioteca" class="pantalla">
+        <div class="contenedor-pantalla">
+            <button class="boton-volver" onclick="mostrarPantalla('inicio')">← Atrás</button>
+            
+            <h1 class="titulo-pantalla">Biblioteca Digital</h1>
+            <p class="subtitulo-pantalla">Accede a libros, guías y recursos educativos offline.</p>
+            
+            <div class="contenedor-busqueda">
+                <input type="text" class="entrada-busqueda" placeholder="Barra de búsqueda">
+                <button class="boton-busqueda">🔍</button>
+            </div>
+            
+            <p class="intro-categoria">Aquí abajo encontrarás una lista de materias y temas dentro de cada uno</p>
+            
+            <div class="cuadricula-categorias">
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">🌐</span>
+                    <span class="texto-categoria">DESARROLLO WEB</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">🌍</span>
+                    <span class="texto-categoria">REDES Y SISTEMAS</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">📊</span>
+                    <span class="texto-categoria">MATEMÁTICAS</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">💼</span>
+                    <span class="texto-categoria">NEGOCIOS Y EMPRENDIMIENTO</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">🎨</span>
+                    <span class="texto-categoria">DISEÑO Y MULTIMEDIA</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">🔬</span>
+                    <span class="texto-categoria">CIENCIA E INGENIERÍA</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">🔒</span>
+                    <span class="texto-categoria">SEGURIDAD Y TECNOLOGÍA</span>
+                </div>
+                <div class="tarjeta-categoria">
+                    <span class="icono-categoria">💬</span>
+                    <span class="texto-categoria">HABILIDADES BLANDAS</span>
+                </div>
+            </div>
+            
+            <div class="grafico-gato">
+                <p>Aquí estoy para que investigemos juntos</p>
+                <div class="emoji-gato">🐱</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla Programación -->
+    <div id="pantalla-programacion" class="pantalla">
+        <div class="contenedor-pantalla">
+            <button class="boton-volver" onclick="mostrarPantalla('inicio')">← Atrás</button>
+            
+            <h1 class="titulo-pantalla">PROGRAMACIÓN</h1>
+            <p class="subtitulo-pantalla">Explora conceptos, prácticas y recursos para aprender programación desde cero hasta nivel avanzado</p>
+            
+            <div class="contenedor-busqueda">
+                <input type="text" class="entrada-busqueda" placeholder="Barra de búsqueda">
+                <button class="boton-busqueda">🔍</button>
+            </div>
+            
+            <p class="intro-categoria">Explora categorías diseñadas para fortalecer tus conocimientos.</p>
+            
+            <div class="cuadricula-categorias">
+                <select id="Fundamentos" class="tarjeta-categoria" name="fundamentos">
+                    <option value="" selected disabled>🟣 🧠 Fundamentos</option>
+                    <option value="introduccion">💻 Introducción a la Programación</option>
+                    <option value="logica">🧠 Lógica de Programación</option>
+                    <option value="algoritmos">🔁 Algoritmos Básicos</option>
+                    <option value="estructuras">📦 Estructuras de Datos Básicas</option>
+                    <option value="pseudocodigo">🧩 Pseudocódigo</option>
+                </select>
+
+                <select id="Python" class="tarjeta-categoria" name="python">
+                    <option value="" selected disabled>🐍 Python</option>
+                    <option value="variables">🐍 Variables y Tipos de Datos</option>
+                    <option value="condicionales">🐍 Condicionales (if/else)</option>
+                    <option value="ciclos">🐍 Ciclos (for / while)</option>
+                    <option value="funciones">🐍 Funciones en Python</option>
+                    <option value="listas">🐍 Listas y Diccionarios</option>
+                    <option value="archivos">🐍 Manejo de Archivos</option>
+                    <option value="intermedio">🐍 Python Intermedio</option>
+                </select>
+
+                <select id="Java" class="tarjeta-categoria" name="java">
+                    <option value="" selected disabled>🔵 ☕ Java</option>
+                    <option value="basico">☕ Java Básico</option>
+                    <option value="sintaxis">☕ Sintaxis de Java</option>
+                    <option value="poo">☕ POO en Java</option>
+                    <option value="clases">☕ Clases y Objetos</option>
+                    <option value="herencia">☕ Herencia</option>
+                    <option value="polimorfismo">☕ Polimorfismo</option>
+                    <option value="interfaces">☕ Interfaces</option>
+                    <option value="intermedio">☕ Java Intermedio</option>
+                </select>
+
+                <select id="JavaScript" class="tarjeta-categoria" name="javascript">
+                    <option value="" selected disabled>🌐 JavaScript</option>
+                    <option value="basico">🌐 JavaScript Básico</option>
+                    <option value="dom">🌐 DOM (Manipulación de páginas)</option>
+                    <option value="eventos">🌐 Eventos</option>
+                    <option value="funciones">🌐 Funciones en JS</option>
+                    <option value="arrays">🌐 Arrays y Objetos</option>
+                    <option value="async">🌐 Async / Await</option>
+                    <option value="apis">🌐 APIs en JavaScript</option>
+                </select>
+
+                <select id="EstructurasAlgoritmos" class="tarjeta-categoria" name="estructuras-algoritmos">
+                    <option value="" selected disabled>🧩 Estructuras y Algoritmos</option>
+                    <option value="listas">📦 Listas Enlazadas</option>
+                    <option value="pilas-colas">📦 Pilas y Colas</option>
+                    <option value="arboles">📦 Árboles</option>
+                    <option value="grafos">📦 Grafos Básicos</option>
+                    <option value="ordenamiento">🔁 Algoritmos de Ordenamiento</option>
+                    <option value="busqueda">🔍 Búsqueda Lineal y Binaria</option>
+                    <option value="complejidad">🧠 Complejidad Algorítmica</option>
+                </select>
+
+                <select id="DesarrolloSoftware" class="tarjeta-categoria" name="desarrollo-software">
+                    <option value="" selected disabled>⚙️ Desarrollo de Software</option>
+                    <option value="ingenieria">⚙️ Ingeniería de Software</option>
+                    <option value="agiles">🧑‍💻 Metodologías Ágiles</option>
+                    <option value="git">🗃️ Control de Versiones (Git)</option>
+                    <option value="testing">🧪 Testing de Software</option>
+                    <option value="arquitectura">🧱 Arquitectura de Software</option>
+                    <option value="apps">📱 Desarrollo de Apps</option>
+                </select>
+
+                <select id="TecnologiasModernas" class="tarjeta-categoria" name="tecnologias-modernas">
+                    <option value="" selected disabled>🤖 Tecnologías Modernas</option>
+                    <option value="ia">🤖 Introducción a la IA</option>
+                    <option value="ml">🧠 Machine Learning Básico</option>
+                    <option value="cloud">☁️ Cloud Computing</option>
+                    <option value="seguridad">🔐 Seguridad en Programación</option>
+                    <option value="apis">🌐 APIs REST</option>
+                    <option value="backend">📡 Backend Básico</option>
+                </select>
+            </div>
+            
+            <div class="mensaje-tech">
+                <p>Explora nuevas tecnologías a tu ritmo.</p>
+                <div class="emoji-gato">🐱</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla Recursos -->
+    <div id="pantalla-recursos" class="pantalla">
+        <div class="contenedor-pantalla">
+            <button class="boton-volver" onclick="mostrarPantalla('inicio')">← Atrás</button>
+            
+            <h1 class="titulo-pantalla">Recursos</h1>
+            <p class="subtitulo-pantalla">Herramientas y materiales complementarios para tu aprendizaje.</p>
+            
+            <div class="contenedor-busqueda">
+                <input type="text" class="entrada-busqueda" placeholder="Barra de búsqueda">
+                <button class="boton-busqueda">🔍</button>
+            </div>
+            
+            <div class="cuadricula-recursos">
+                <div class="tarjeta-recurso">
+                    <span class="icono-recurso">📹</span>
+                    <span class="titulo-recurso">Tutoriales en Video</span>
+                    <p class="desc-recurso">Aprende con tutoriales visuales paso a paso</p>
+                </div>
+                <div class="tarjeta-recurso">
+                    <span class="icono-recurso">📖</span>
+                    <span class="titulo-recurso">E-Books</span>
+                    <p class="desc-recurso">Accede a libros digitales especializados</p>
+                </div>
+                <div class="tarjeta-recurso">
+                    <span class="icono-recurso">🛠️</span>
+                    <span class="titulo-recurso">Herramientas en Línea</span>
+                    <p class="desc-recurso">Software recomendado para desarrollo</p>
+                </div>
+                <div class="tarjeta-recurso">
+                    <span class="icono-recurso">👥</span>
+                    <span class="titulo-recurso">Comunidad</span>
+                    <p class="desc-recurso">Conecta con otros estudiantes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="fusacloud.js"></script>
+</body>
+</html>

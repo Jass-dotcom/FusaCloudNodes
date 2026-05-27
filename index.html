@@ -62,6 +62,7 @@
             <button class="boton-volver" onclick="cerrarSesion()">Cerrar sesión</button>
             <h1 class="titulo-pantalla">Panel Administrativo</h1>
             <p class="subtitulo-pantalla">Crea cuentas de estudiante, institucionales y administradores extra.</p>
+            <p class="config-texto admin-summary">Cuentas en línea: <strong id="admin-cuentas-en-linea">0</strong> · Total de cuentas registradas: <strong id="admin-total-usuarios">0</strong></p>
             <div class="admin-area">
                 <div class="admin-card">
                     <h2>Crear nueva cuenta</h2>
@@ -82,7 +83,102 @@
                     <ul id="admin-user-list" class="lista-usuarios"></ul>
                 </div>
             </div>
+            <div class="admin-botones-secundarios">
+                <button class="boton-nav" onclick="mostrarPantalla('configuracion')">
+                    <span class="icono-boton">⚙️</span>
+                    <span class="texto-boton">Configuración</span>
+                </button>
+                <button class="boton-nav" onclick="mostrarPantalla('baul')">
+                    <span class="icono-boton">📦</span>
+                    <span class="texto-boton">Baúl Escolar</span>
+                </button>
+            </div>
             <button class="boton-nav" onclick="mostrarPantalla('inicio')">Ir al inicio</button>
+        </div>
+    </div>
+
+    <!-- pantalla otra-->
+    <div id="pantalla-configuracion" class="pantalla">
+        <div class="contenedor-pantalla">
+            <button class="boton-volver" onclick="mostrarPantalla('admin')">← Atrás</button>
+            
+            <h1 class="titulo-pantalla">⚙️ Configuración del Nodo</h1>
+            <p class="subtitulo-pantalla">Administra la salud y seguridad de tu servidor local.</p>
+            
+            <div class="admin-area">
+                <div class="admin-card">
+                    <h2>Salud del Nodo</h2>
+                    <p class="config-texto">
+                        <strong>Estado:</strong> ✅ En línea<br>
+                        <strong>Almacenamiento disponible:</strong> 450 GB<br>
+                        <strong>Cuentas registradas:</strong> <span id="config-total-usuarios">0</span><br>
+                        <strong>Cuentas en línea:</strong> <span id="config-usuarios-online">0</span><br>
+                        <strong>Última sincronización:</strong> Hoy 15:30
+                    </p>
+                    <button class="boton-primario" style="margin-top: 15px;" onclick="sincronizarContenidos()">Sincronizar Contenidos Ahora</button>
+                    <p class="config-nota">Próxima sincronización programada: Mañana 2:00 AM</p>
+                </div>
+
+                <div class="admin-card">
+                    <h2>🔒 Panel de Control de Seguridad</h2>
+                    <p class="config-texto">
+                        <strong>Tipo de red:</strong> 🌐 Intranet Aislada (Segura)<br>
+                        <strong>Conexión a Internet externo:</strong> ❌ Deshabilitada<br>
+                        <strong>Amenazas detectadas:</strong> 0<br>
+                        <strong>Modo navegación segura:</strong> 
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </p>
+                    <p class="config-nota">✅ Todo el tráfico está completamente aislado dentro del colegio. Cero riesgo de virus externos o acceso a sitios peligrosos.</p>
+                </div>
+
+                <div class="admin-card">
+                    <h2>📅 Cronograma de Descargas</h2>
+                    <p class="config-texto">
+                        <strong>Descargas automáticas:</strong> Habilitadas<br>
+                        <strong>Horario:</strong> 2:00 AM - 4:00 AM<br>
+                        <strong>Próxima descarga:</strong> <input type="datetime-local" class="config-input"><br>
+                    </p>
+                    <button class="boton-primario" style="margin-top: 15px;" onclick="guardarCronograma()">Guardar Cronograma</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- subir las guias jsjdaf-->
+    <div id="pantalla-baul" class="pantalla">
+        <div class="contenedor-pantalla">
+            <button class="boton-volver" onclick="mostrarPantalla('admin')">← Atrás</button>
+            
+            <h1 class="titulo-pantalla">📦 Baúl Escolar - Carga de Contenidos</h1>
+            <p class="subtitulo-pantalla">Docentes: Suban guías, videos y materiales para compartir con los estudiantes.</p>
+            
+            <div class="admin-area">
+                <div class="admin-card baul-card">
+                    <h2>📁 Arrastra tus archivos aquí</h2>
+                    <div class="drop-zone" id="drop-zone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <div class="drop-zone-content">
+                            <p class="drop-icon">📤</p>
+                            <p class="drop-texto">Arrastra archivos PDF, videos o documentos aquí</p>
+                            <p class="drop-subnota">o haz clic para seleccionar</p>
+                            <input type="file" id="file-input" multiple style="display: none;" onchange="handleFileSelect(event)">
+                            <button class="boton-primario" style="margin-top: 15px;" onclick="document.getElementById('file-input').click()">Seleccionar Archivos</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card baul-card">
+                    <h2>📤 Archivos Cargados Recientemente</h2>
+                    <ul id="baul-archivos-list" class="lista-usuarios">
+                        <li>📄 Guía_Python_Básico.pdf - <strong>Enlace:</strong> fusacloud.local/contenidos/001</li>
+                        <li>🎬 Tutorial_HTML5.mp4 - <strong>Enlace:</strong> fusacloud.local/contenidos/002</li>
+                        <li>📊 Presentación_Seguridad.pptx - <strong>Enlace:</strong> fusacloud.local/contenidos/003</li>
+                    </ul>
+                    <p class="config-nota">Los enlaces se generan automáticamente. Los estudiantes pueden acceder desde cualquier dispositivo en la red local.</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -121,7 +217,7 @@
         </div>
     </div>
 
-    <!-- Pantalla Biblioteca Digital -->
+    <!-- pantalla de biblioteca -->
     <div id="pantalla-biblioteca" class="pantalla">
         <div class="contenedor-pantalla">
             <button class="boton-volver" onclick="mostrarPantalla('inicio')">← Atrás</button>
@@ -178,7 +274,7 @@
         </div>
     </div>
 
-    <!-- Pantalla Programación -->
+    <!-- programacion -->
     <div id="pantalla-programacion" class="pantalla">
         <div class="contenedor-pantalla">
             <button class="boton-volver" onclick="mostrarPantalla('inicio')">← Atrás</button>
@@ -267,6 +363,23 @@
                     <option value="apis">🌐 APIs REST</option>
                     <option value="backend">📡 Backend Básico</option>
                 </select>
+
+                <select id="EditorCodigo" class="tarjeta-categoria" name="editor-codigo">
+                    <option value="" selected disabled>✏️ Editor de Código en Vivo</option>
+                    <option value="html-css">🌐 HTML & CSS Editor</option>
+                    <option value="javascript">🔧 JavaScript Interactivo</option>
+                    <option value="python">🐍 Python Sandbox</option>
+                    <option value="console">💻 Consola en Vivo</option>
+                </select>
+
+                <select id="ScratchEspejo" class="tarjeta-categoria" name="scratch-espejo">
+                    <option value="" selected disabled>🧩 Scratch Espejo (Bloques)</option>
+                    <option value="basico">🟢 Movimiento y Eventos</option>
+                    <option value="intermedio">🟡 Lógica y Controles</option>
+                    <option value="avanzado">🔴 Clones y Sincronización</option>
+                    <option value="juegos">🎮 Crear Juegos Simples</option>
+                    <option value="colaborativo">👥 Modo Colaborativo</option>
+                </select>
             </div>
             
             <div class="mensaje-tech">
@@ -276,7 +389,7 @@
         </div>
     </div>
 
-    <!-- Pantalla Recursos -->
+    <!-- Otrosrecursos -->
     <div id="pantalla-recursos" class="pantalla">
         <div class="contenedor-pantalla">
             <button class="boton-volver" onclick="mostrarPantalla('inicio')">← Atrás</button>
@@ -310,10 +423,47 @@
                     <span class="titulo-recurso">Comunidad</span>
                     <p class="desc-recurso">Conecta con otros estudiantes</p>
                 </div>
+                <div class="tarjeta-recurso">
+                    <span class="icono-recurso">🔗</span>
+                    <span class="titulo-recurso">Compartir con Otros</span>
+                    <p class="desc-recurso">Comparte archivos y recursos con compañeros en la red local sin consumir datos</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="fusacloud.js"></script>
+    <!-- code pen basicamente -->
+    <div id="pantalla-editor" class="pantalla">
+        <div class="contenedor-pantalla editor-pantalla">
+            <button class="boton-volver" onclick="mostrarPantalla('programacion')">← Atrás</button>
+            <h1 class="titulo-pantalla">✏️ Editor en Vivo</h1>
+            <p class="subtitulo-pantalla">Escribe HTML, CSS y JavaScript; la vista previa se actualiza en tiempo real.</p>
+
+            <div class="editor-grid">
+                <div class="editor-col">
+                    <label class="editor-label">HTML</label>
+                    <textarea id="editor-html" class="editor-textarea">&lt;!-- HTML aquí --&gt;
+&lt;h1&gt;Hola mundo&lt;/h1&gt;</textarea>
+
+                    <label class="editor-label">CSS</label>
+                    <textarea id="editor-css" class="editor-textarea">/* CSS aquí */
+body { font-family: sans-serif; color: #111; }</textarea>
+
+                    <label class="editor-label">JavaScript</label>
+                    <textarea id="editor-js" class="editor-textarea">// JS aquí
+console.log('Hola desde el editor');</textarea>
+                </div>
+
+                <div class="preview-col">
+                    <div class="preview-toolbar">
+                        <button class="boton-primario" id="editor-run">Actualizar</button>
+                        <span class="preview-note">Vista previa local (sandbox)</span>
+                    </div>
+                    <iframe id="editor-preview" class="editor-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

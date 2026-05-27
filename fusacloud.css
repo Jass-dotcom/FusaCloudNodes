@@ -275,7 +275,7 @@ body.with-top-bar .pantalla.activa {
     line-height: 1.6;
 }
 
-/* Search Container */
+/* buscar*/
 .contenedor-busqueda {
     display: flex;
     gap: 10px;
@@ -458,6 +458,136 @@ body.with-top-bar .pantalla.activa {
     margin-bottom: 10px;
     background: #f9f7ff;
     color: var(--dark-text);
+}
+
+.admin-botones-secundarios {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.admin-botones-secundarios .boton-nav {
+    flex: 1;
+    min-width: 150px;
+}
+
+/*---------------------------------------------------------------- */
+.config-texto {
+    line-height: 2;
+    color: var(--dark-text);
+    font-size: 0.95rem;
+}
+
+.config-nota {
+    margin-top: 15px;
+    color: var(--light-text);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.config-input {
+    padding: 10px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin: 8px 0;
+}
+
+/* el switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    margin: 0 8px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Baúl Escolar - Drag & Drop */
+.drop-zone {
+    border: 3px dashed var(--primary-color);
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(139, 92, 246, 0.05);
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+    border-color: var(--secondary-color);
+    background: rgba(139, 92, 246, 0.1);
+    transform: scale(1.02);
+}
+
+.drop-zone-content {
+    width: 100%;
+}
+
+.drop-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.drop-texto {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 5px;
+}
+
+.drop-subnota {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+}
+
+.baul-card {
+    min-height: 350px;
 }
 
 .contenedor-inicio {
@@ -708,4 +838,70 @@ body {
     to {
         background-position: 100% 50%;
     }
+}
+
+/*  minimal */
+.editor-pantalla .editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.editor-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editor-label {
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 6px;
+}
+
+.editor-textarea {
+    width: 100%;
+    min-height: 140px;
+    max-height: 360px;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.95rem;
+    resize: vertical;
+}
+
+.preview-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preview-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.preview-note {
+    color: var(--light-text);
+    font-size: 0.9rem;
+}
+
+.editor-preview {
+    width: 100%;
+    height: 520px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: white;
+}
+
+@media (max-width: 900px) {
+    .editor-pantalla .editor-grid {
+        grid-template-columns: 1fr;
+    }
+    .editor-preview { height: 360px; }
 }
